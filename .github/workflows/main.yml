@@ -29,8 +29,15 @@ jobs:
           java-version: '11'
 
       # Setup sonar-scanner
-      - name: Setup SonarQube
-        uses: warchant/setup-sonar-scanner@v7
+      #- name: Setup SonarQube
+       # uses: warchant/setup-sonar-scanner@v7
+
+      - name: Install SonarScanner CLI
+        run: |
+           wget https://binaries.sonarsource.com/Distribution/sonar-scanner-cli/sonar-scanner-cli-5.0.1.3006-linux.zip
+           unzip sonar-scanner-cli-5.0.1.3006-linux.zip
+           sudo mv sonar-scanner-5.0.1.3006-linux /opt/sonar-scanner
+           echo "/opt/sonar-scanner/bin" >> $GITHUB_PATH
 
       # Run sonar-scanner
       - name: SonarQube Scan
