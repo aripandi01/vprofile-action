@@ -69,6 +69,9 @@ jobs:
       - name: Code checkout
         uses: actions/checkout@v4
 
+      - name: Login to DockerHub
+        run: echo "${{ secrets.DOCKERHUB_TOKEN }}" | docker login -u "${{ secrets.DOCKERHUB_USERNAME }}" --password-stdin
+
       - name: Build & Upload image to ECR
         uses: appleboy/docker-ecr-action@master
         with:
@@ -116,4 +119,4 @@ jobs:
           chart-path: helm/vprofilecharts
           namespace: default
           values: appimage=${{ secrets.REGISTRY }}/${{ env.ECR_REPOSITORY }},apptag=${{ github.run_number }}
-          name: vprofile-stack    
+          name: vprofile-stack
